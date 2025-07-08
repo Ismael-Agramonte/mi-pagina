@@ -1,0 +1,379 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Cyberlux | Tecnología de Confianza</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #1e90ff;
+      --dark-bg: #0d1b2a;
+      --light-bg: #f7f9fc;
+      --text-light: #ffffff;
+      --text-dark: #333333;
+    }
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Roboto', sans-serif;
+      scroll-behavior: smooth;
+    }
+    body {
+      background-color: var(--light-bg);
+      color: var(--text-dark);
+      line-height: 1.6;
+      transition: background 0.5s, color 0.5s;
+    }
+    body.dark {
+      background-color: var(--dark-bg);
+      color: var(--text-light);
+    }
+    .floating-nav {
+      position: fixed;
+      top: 50%;
+      right: 10px;
+      transform: translateY(-50%);
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      z-index: 999;
+    }
+    .floating-nav a, .floating-nav select {
+      color: #fff;
+      background-color: var(--primary);
+      padding: 8px 12px;
+      text-align: center;
+      text-decoration: none;
+      border-radius: 8px;
+      font-size: 14px;
+      font-weight: bold;
+      transition: background 0.3s;
+    }
+    .floating-nav a:hover {
+      background-color: #f5fcf9;
+    }
+    header {
+      background-color: #102a43;
+      color: #fff;
+      padding: 2rem 1rem 4rem;
+      text-align: center;
+    }
+    header h1 {
+      font-size: 2.5rem;
+      animation: fadeInDown 1s ease;
+    }
+    header p {
+      font-size: 1.1rem;
+      margin-top: 0.5rem;
+      animation: fadeInUp 1s ease;
+    }
+    section {
+      padding: 2rem;
+      max-width: 1000px;
+      margin: auto;
+    }
+    .services, .testimonials, .gallery, .contact, .info {
+      margin-bottom: 3rem;
+    }
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(13, 41, 182, 0.1);
+      padding: 1rem;
+      margin-bottom: 1rem;
+      transition: transform 0.3s;
+    }
+    body.dark .card {
+      background: rgba(11, 29, 190, 0.97);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.1);
+    }
+    .card:hover {
+      transform: translateY(-5px);
+    }
+    .card img {
+      width: 100%;
+      border-radius: 8px;
+      margin-bottom: 0.5rem;
+    }
+    .cta {
+      background-color: var(--primary);
+      color: white;
+      text-align: center;
+      padding: 2rem;
+      border-radius: 12px;
+    }
+    .cta a {
+      color: #fff;
+      background: #ffffff;
+      padding: 10px 20px;
+      border-radius: 8px;
+      text-decoration: none;
+      display: inline-block;
+      margin-top: 1rem;
+      font-weight: bold;
+    }
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+    input, textarea {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+    }
+    input:focus, textarea:focus {
+      border-color: var(--primary);
+      outline: none;
+    }
+    button {
+      background-color: var(--primary);
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    iframe {
+      width: 100%;
+      height: 300px;
+      border: none;
+      border-radius: 10px;
+    }
+    footer {
+      background: #f2f2f2;
+      color: #fff;
+      text-align: center;
+      padding: 1rem;
+    }
+    .whatsapp-btn {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      background-color: #25d366;
+      color: white;
+      border-radius: 50%;
+      width: 60px;
+      height: 60px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-decoration: none;
+      font-size: 28px;
+      z-index: 999;
+      box-shadow: 0 4px 12px rgba(43, 17, 191, 0.993);
+    }
+    .dark-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #edeef2;
+      color: white;
+      padding: 10px;
+      border-radius: 10px;
+      cursor: pointer;
+      z-index: 999;
+    }
+    .info .employee {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      margin-top: 1rem;
+    }
+    .info .employee img {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      object-fit: cover;
+    }
+    @keyframes fadeInDown {
+      from { opacity: 0; transform: translateY(-20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+  </style>
+  <script>
+    const translations = {
+      es: {
+        inicio: 'Inicio',
+        servicios: 'Servicios',
+        proyectos: 'Proyectos',
+        clientes: 'Clientes',
+        Ubicacion: 'Ubicacion',
+        info: 'Info',
+        contactanos: 'Contáctanos ahora',
+        lugar: 'Estamos ubicados en el mejor punto comercial de Santo Domingo: Av. 27 de Febrero esquina Winston Churchill.'
+      },
+      en: {
+        inicio: 'Home',
+        servicios: 'Services',
+        proyectos: 'Projects',
+        clientes: 'Clients',
+       Ubicacion: 'Reviews',
+        info: 'Info',
+        contactanos: 'Contact Us Now',
+        lugar: 'We are located in the best commercial area of Santo Domingo: 27 de Febrero Ave & Winston Churchill.'
+      }
+    };
+    function changeLang(lang) {
+      const t = translations[lang];
+      document.querySelectorAll('.floating-nav a').forEach((el, i) => {
+        const key = Object.keys(t)[i];
+        el.textContent = t[key];
+      });
+      document.querySelector('.cta a').textContent = t.contactanos;
+      document.querySelector('#contact p').textContent = t.lugar;
+    }
+  </script>
+</head>
+<body>
+  <div class="dark-toggle" onclick="document.body.classList.toggle('dark')">🌙</div>
+  <a class="whatsapp-btn" href="https://wa.me/18291234567" target="_blank">💬</a>
+  <div class="floating-nav">
+    <a href="#">Inicio</a>
+    <a href="#services">Servicios</a>
+    <a href="#gallery">Proyectos</a>
+    <a href="#testimonials">Clientes</a>
+    <a href="#contact">Ubicacion</a>
+    <a href="#info">Info</a>
+    <select onchange="changeLang(this.value)">
+      <option selected value="es">Idioma</option>
+      <option value="es">Español</option>
+      <option value="en">English</option>
+    </select>
+  </div>
+
+  <header>
+    <h1>Cyberlux</h1>
+    <p>Tecnología confiable, moderna y centrada en las personas. ¡Conócenos!</p>
+  </header>
+  <!-- CONTENIDO ANTERIOR ARRIBA -->
+
+<section id="services" class="services">
+  <h2>Servicios</h2>
+  <div class="card" style="display: flex; align-items: center; gap: 1rem;">
+    <img src="https://images.unsplash.com/photo-1498050108023-c5249f4df085?auto=format&fit=crop&w=1920&q=80" alt="Sistema de seguridad" style="width: 40%;">
+    <div>
+      <h3>Sistemas de Seguridad</h3>
+      <p>Instalamos cámaras de seguridad, sensores de movimiento, alarmas inteligentes, control de acceso biométrico y monitoreo remoto 24/7. Protege tu empresa con tecnología de última generación.</p>
+    </div>
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1rem;">
+    <img src="https://images.unsplash.com/photo-1629904853716-f0bc54eea481" alt="Desarrollo Web" style="width: 40%;">
+    <div>
+      <h3>Desarrollo Web</h3>
+      <p>Diseño y programación de sitios web profesionales, tiendas en línea, paneles administrativos y sistemas a medida con SEO y responsividad total.</p>
+    </div>
+  </div>
+  <div class="card" style="display: flex; align-items: center; gap: 1rem;">
+    <img src="https://images.unsplash.com/photo-1603791440384-56cd371ee9a7" alt="Inteligencia Artificial" style="width: 40%;">
+    <div>
+      <h3>Automatización e IA</h3>
+      <p>Implementamos bots de atención, asistentes inteligentes, análisis predictivo y automatización de procesos empresariales.</p>
+    </div>
+  </div>
+</section>
+
+<section id="gallery" class="gallery">
+  <h2>Proyectos</h2>
+  <div class="card">
+    <h3>Centro de Monitoreo Nacional</h3>
+    <p>Instalación de más de 300 cámaras en zonas estratégicas con inteligencia artificial para reconocimiento facial y detección de anomalías. Proyecto clave de ciberseguridad urbana.</p>
+  </div>
+  <div class="card">
+    <h3>Plataforma Web de Gestión Escolar</h3>
+    <p>Desarrollo de un sistema web integral con asistencia, pagos, boletines y comunicación directa con padres y docentes. Más de 2,000 estudiantes beneficiados.</p>
+  </div>
+  <div class="card">
+    <h3>Automatización de Call Center con IA</h3>
+    <p>Redujimos un 60% el tiempo de respuesta de clientes usando bots de voz, predicción de solicitudes frecuentes y respuestas automáticas personalizadas.</p>
+  </div>
+</section>
+
+<section id="testimonials" class="testimonials">
+  <h2>Clientes</h2>
+  <div style="display: flex; align-items: center; justify-content: space-between;">
+    <div style="width: 50%;">
+      <div class="card">
+        <p>💬 “Cyberlux nos cambió la vida. Gracias a su sistema de seguridad, nuestro local está protegido 24/7.” – Ana P.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Excelente atención y productos de calidad. ¡100% recomendados!” – Carlos M.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Nuestra página web ahora es más rápida y moderna. Gracias Cyberlux.” – Natalia G.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Recomiendo sus servicios. Profesionales y atentos.” – Julio V.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Automatizamos todo gracias a ellos. Increíble lo que hacen.” – Karen R.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Mejor inversión del año. Servicio técnico impecable.” – Héctor B.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Ahora nuestro negocio es más seguro y moderno.” – Luis T.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Siempre disponibles para ayudarnos. Gracias.” – Mariana Z.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Una empresa que entiende lo que necesitas.” – Esteban D.</p>
+      </div>
+      <div class="card">
+        <p>💬 “Gracias Cyberlux por profesionalismo y calidad.” – Laura R.</p>
+      </div>
+    </div>
+    <div style="text-align: center; width: 45%;">
+      <h3>Clientes Felices</h3>
+      <p style="font-size: 2rem; font-weight: bold;">+2,800</p>
+      <h3>Proyectos Completados</h3>
+      <p style="font-size: 2rem; font-weight: bold;">+160</p>
+    </div>
+  </div>
+</section>
+
+<section id="contact" class="contact">
+  <h2>Ubicación</h2>
+  <p>Estamos ubicados en el mejor punto comercial de Santo Domingo: Av. 27 de Febrero esquina Winston Churchill.</p>
+  <iframe src="https://maps.google.com/maps?q=Av.%2027%20de%20Febrero%20esq.%20Winston%20Churchill,%20Santo%20Domingo&t=&z=15&ie=UTF8&iwloc=&output=embed"></iframe>
+</section>
+
+<section id="info" class="info">
+  <h2>Info y Nuestro Equipo</h2>
+  <p>Cyberlux está a la vanguardia en soluciones tecnológicas: sistemas de seguridad, desarrollo web, automatización de procesos y más. Nuestro enfoque está en ofrecer tecnología accesible, moderna y de alto impacto para empresas y hogares.</p>
+  <h3>Empleados Estrella</h3>
+  <div class="employee">
+    <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="Juan Pérez">
+    <div>
+      <strong>Juan Pérez</strong><br />
+      Especialista en Seguridad y Supervisión Técnica.
+    </div>
+  </div>
+  <div class="employee">
+    <img src="https://randomuser.me/api/portraits/women/45.jpg" alt="Laura Méndez">
+    <div>
+      <strong>Laura Méndez</strong><br />
+      Ingeniera Web y Diseñadora UX.
+    </div>
+  </div>
+  <div class="employee">
+    <img src="https://randomuser.me/api/portraits/men/75.jpg" alt="Carlos Ramírez">
+    <div>
+      <strong>Carlos Ramírez</strong><br />
+      Desarrollador IA y Consultor de Automatización.
+    </div>
+  </div>
+</section>
+
+
+  <!-- TODO: contenido ampliado de servicios e imágenes adicionales a partir de aquí -->
+</body>
+</html>
